@@ -1,37 +1,72 @@
-## Welcome to GitHub Pages
+## Color Picker — beautiful library for Android
 
-You can use the [editor on GitHub](https://github.com/vadiole/colorpicker/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+<img src="https://raw.githubusercontent.com/vadiole/colorpicker/master/assets/1_l.png" alt="screenshot 1" width="23%" height="22%"> <img src="https://raw.githubusercontent.com/vadiole/colorpicker/master/assets/1_d.png" alt="screenshot 2" width="23%" height="22%"> <img src="https://raw.githubusercontent.com/vadiole/colorpicker/master/assets/2_l.png" alt="screenshot 3" width="23%" height="22%"> <img src="https://raw.githubusercontent.com/vadiole/colorpicker/master/assets/2_d.png" alt="screenshot 4" width="23%" height="22%"> <img src="https://raw.githubusercontent.com/vadiole/colorpicker/master/assets/3_l.png" alt="screenshot 5" width="23%" height="22%"> <img src="https://raw.githubusercontent.com/vadiole/colorpicker/master/assets/3_d.png" alt="screenshot 6" width="23%" height="22%"> <img src="https://raw.githubusercontent.com/vadiole/colorpicker/master/assets/4_l.png" alt="screenshot 7" width="23%" height="22%"> <img src="https://raw.githubusercontent.com/vadiole/colorpicker/master/assets/4_d.png" alt="screenshot 8" width="23%" height="22%">
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+### Features
+  - Simple dialog builder 
+  - ARGB, RGB & HSV color models
+  - Dark theme support
+  - Sliders with gradient background
+  - Switch color models in runtime
 
-### Markdown
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+### Setup
+```gradle
+dependencies {
+    implementation 'io.github.vadiole.colorpicker:1.0.0'
+}
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+### Usage
+```kotlin
 
-### Jekyll Themes
+//  create dialog
+val colorPicker: ColorPickerDialog = ColorPickerDialog.Builder()
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/vadiole/colorpicker/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+                //  set initial (default) color
+                .setInitialColor(currentColor)
 
-### Support or Contact
+                //  set Color Model. ARGB, RGB or HSV
+                .setColorModel(ColorModel.HSV)
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+                //  set is user be able to switch color model. If model is ARGB - switch not available
+                .setColorModelSwitchEnabled(colorModelSwitchEnabled.isChecked)
+
+                //  set your localized string resource for OK button
+                .setButtonOkText(android.R.string.ok)
+
+                //  set your localized string resource for Cancel button
+                .setButtonCancelText(android.R.string.cancel)
+
+                //  callback for picked color (required)
+                .onColorSelected { color: Int ->
+                    //  use color
+                }
+
+                //  create dialog
+                .create()
+                
+                
+//  show dialog in Activity
+colorPicker.show(supportFragmentManager, "color_picker") 
+
+//  show dialog in Fragment
+colorPicker.show(supportFragmentManager, "color_picker")      
+```
+
+### License
+```
+Copyright 2021 vadiole
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```
