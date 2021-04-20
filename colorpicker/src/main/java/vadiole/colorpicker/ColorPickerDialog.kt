@@ -119,7 +119,7 @@ class ColorPickerDialog internal constructor() : DialogFragment() {
          * @see ColorModel.RGB - red, green, blue
          * @see ColorModel.HSV - hue, saturation, value
          */
-        fun setColorMode(colorModel: ColorModel): Builder {
+        fun setColorModel(colorModel: ColorModel): Builder {
             this.colorModel = colorModel
             return this
         }

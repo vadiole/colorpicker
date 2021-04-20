@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
                 .setInitialColor(currentColor)
 
                 //  set Color Model. If use alpha - ARGB, else RGB. Use what your want
-                .setColorMode(if (useAlpha.isChecked) ColorModel.ARGB else ColorModel.RGB)
+                .setColorModel(if (useAlpha.isChecked) ColorModel.ARGB else ColorModel.RGB)
 
                 //  set is user be able to switch color model. If ARGB - switch not available
                 .setColorModelSwitchEnabled(colorModelSwitchEnabled.isChecked)
