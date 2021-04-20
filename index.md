@@ -1,8 +1,8 @@
-## Color Picker — beautiful library for Android
+## Color Picker
 
 <img src="https://raw.githubusercontent.com/vadiole/colorpicker/master/assets/1_l.png" alt="screenshot 1" width="23%" height="22%"> <img src="https://raw.githubusercontent.com/vadiole/colorpicker/master/assets/1_d.png" alt="screenshot 2" width="23%" height="22%"> <img src="https://raw.githubusercontent.com/vadiole/colorpicker/master/assets/2_l.png" alt="screenshot 3" width="23%" height="22%"> <img src="https://raw.githubusercontent.com/vadiole/colorpicker/master/assets/2_d.png" alt="screenshot 4" width="23%" height="22%"> <img src="https://raw.githubusercontent.com/vadiole/colorpicker/master/assets/3_l.png" alt="screenshot 5" width="23%" height="22%"> <img src="https://raw.githubusercontent.com/vadiole/colorpicker/master/assets/3_d.png" alt="screenshot 6" width="23%" height="22%"> <img src="https://raw.githubusercontent.com/vadiole/colorpicker/master/assets/4_l.png" alt="screenshot 7" width="23%" height="22%"> <img src="https://raw.githubusercontent.com/vadiole/colorpicker/master/assets/4_d.png" alt="screenshot 8" width="23%" height="22%">
 
-### Features
+## Features
   - Simple dialog builder 
   - ARGB, RGB & HSV color models
   - Dark theme support
@@ -10,14 +10,14 @@
   - Switch color models in runtime
 
 
-### Setup
+## Setup
 ```gradle
 dependencies {
     implementation 'io.github.vadiole.colorpicker:1.0.0'
 }
 ```
 
-### Usage
+## Usage
 ```kotlin
 
 //  create dialog
@@ -29,8 +29,8 @@ val colorPicker: ColorPickerDialog = ColorPickerDialog.Builder()
                 //  set Color Model. ARGB, RGB or HSV
                 .setColorModel(ColorModel.HSV)
 
-                //  set is user be able to switch color model. If model is ARGB - switch not available
-                .setColorModelSwitchEnabled(colorModelSwitchEnabled.isChecked)
+                //  set is user be able to switch color model
+                .setColorModelSwitchEnabled(true)
 
                 //  set your localized string resource for OK button
                 .setButtonOkText(android.R.string.ok)
@@ -54,7 +54,7 @@ colorPicker.show(supportFragmentManager, "color_picker")
 colorPicker.show(supportFragmentManager, "color_picker")      
 ```
 
-### License
+## License
 ```
 Copyright 2021 vadiole
 
