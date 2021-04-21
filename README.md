@@ -47,11 +47,11 @@ val colorPicker: ColorPickerDialog = ColorPickerDialog.Builder()
                 .create()
                 
                 
-//  show dialog in Activity
+//  show dialog from Activity
 colorPicker.show(supportFragmentManager, "color_picker") 
 
-//  show dialog in Fragment
-colorPicker.show(supportFragmentManager, "color_picker")      
+//  show dialog from Fragment
+colorPicker.show(childFragmentManager, "color_picker")      
 ```
 
 ### License
