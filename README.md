@@ -13,7 +13,7 @@
 ### Setup
 ```gradle
 dependencies {
-    implementation 'io.github.vadiole.colorpicker:1.0.0'
+    implementation 'io.github.vadiole:colorpicker:1.0.0'
 }
 ```
 
