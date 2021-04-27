@@ -1,4 +1,4 @@
-[![maven central](https://img.shields.io/maven-central/v/io.github.vadiole/colorpicker?color=236dc22&labelColor=424242)](https://search.maven.org/artifact/io.github.vadiole/colorpicker/1.0.1/aar)
+[![maven central](https://img.shields.io/maven-central/v/io.github.vadiole/colorpicker?color=236dc22&labelColor=424242)](https://search.maven.org/artifact/io.github.vadiole/colorpicker/1.0.2/aar)
 # Color Picker — beautiful library for Android
 
 <img src="https://raw.githubusercontent.com/vadiole/colorpicker/master/assets/1_l.png" alt="screenshot 1" width="25%" height="25%"><img src="https://raw.githubusercontent.com/vadiole/colorpicker/master/assets/2_l.png" alt="screenshot 2" width="25%" height="25%"><img src="https://raw.githubusercontent.com/vadiole/colorpicker/master/assets/1_d.png" alt="screenshot 3" width="25%" height="25%"><img src="https://raw.githubusercontent.com/vadiole/colorpicker/master/assets/2_d.png" alt="screenshot 4" width="25%" height="25%"><img src="https://raw.githubusercontent.com/vadiole/colorpicker/master/assets/3_l.png" alt="screenshot 5" width="25%" height="25%"><img src="https://raw.githubusercontent.com/vadiole/colorpicker/master/assets/4_l.png" alt="screenshot 6" width="25%" height="25%"><img src="https://raw.githubusercontent.com/vadiole/colorpicker/master/assets/3_d.png" alt="screenshot 7" width="25%" height="25%"><img src="https://raw.githubusercontent.com/vadiole/colorpicker/master/assets/4_d.png" alt="screenshot 8" width="25%" height="25%">
@@ -14,7 +14,7 @@
 ### Setup
 ```gradle
 dependencies {
-    implementation 'io.github.vadiole:colorpicker:1.0.1'
+    implementation 'io.github.vadiole:colorpicker:1.0.2'
 }
 ```
 
