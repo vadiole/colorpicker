@@ -29,13 +29,13 @@
 
 
     <TextView
-        android:id="@+id/color_picker_sample"
+        android:id="@+id/color_picker_demo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white_60a"
         android:gravity="center"
         android:padding="8dp"
-        android:text="Color Picker Sample"
+        android:text="Color Picker Demo"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/button_pick_color"
@@ -55,14 +55,14 @@
         android:layout_marginTop="16dp"
         android:background="@color/white_60a"
         android:gravity="center"
-        android:padding="8dp"
+        android:padding="24dp"
         android:text="@string/switch_message"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:textColor="@color/black"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/color_picker_sample"
+        app:layout_constraintTop_toBottomOf="@+id/color_picker_demo"
         />
 
 

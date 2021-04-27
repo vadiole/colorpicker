@@ -1,3 +1,3 @@
 include ':colorpicker'
 include ':demo'
-rootProject.name = "ColorPickerSample"
+rootProject.name = "ColorPickerDemo"

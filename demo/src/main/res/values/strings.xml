@@ -5,5 +5,5 @@
     <string name="use_alpha">Use alpha</string>
     <string name="switch_color_model">Switch color model</string>
     <string name="pick_color">Pick color</string>
-    <string name="switch_message">You can switch color model by tapping on channel labels</string>
+    <string name="switch_message">You can switch color model by tapping on channel labels, if color model is not ARGB</string>
 </resources>

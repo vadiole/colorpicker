@@ -19,10 +19,10 @@ class ColorPickerView : RelativeLayout {
 
     companion object {
         const val defaultColor = Color.DKGRAY
-        val defaultColorModel = ColorModel.HSV
-        val defaultColorModelSwitch = true
-        val defaultActionOk = R.string.action_ok
-        val defaultActionCancel = R.string.action_cancel
+        val defaultColorModel = HSV
+        const val defaultColorModelSwitch = true
+        const val defaultActionOk = android.R.string.ok
+        const val defaultActionCancel = android.R.string.cancel
     }
 
 
@@ -45,6 +45,8 @@ class ColorPickerView : RelativeLayout {
     var actionCancelRes: Int
         private set
 
+    var onSwitchColorModelListener: OnSwitchColorModelListener? = null
+
     constructor(context: Context) : this(
         context,
         defaultActionOk,
@@ -61,16 +63,18 @@ class ColorPickerView : RelativeLayout {
         @ColorInt initialColor: Int = Color.DKGRAY,
         colorModel: ColorModel,
         colorModelSwitchEnabled: Boolean,
+        onSwitchColorModelListener: OnSwitchColorModelListener? = null,
     ) : super(context) {
         this.actionOkRes = actionOkRes
         this.actionCancelRes = actionCancelRes
         this.currentColor = initialColor
         this.colorModel = colorModel
         this.colorModelSwitchEnabled = colorModelSwitchEnabled
+        this.onSwitchColorModelListener = onSwitchColorModelListener
         init()
     }
 
-    private fun init(): Unit {
+    private fun init() {
         inflate(context, R.layout.color_picker_view, this)
         clipToPadding = false
 
@@ -121,8 +125,6 @@ class ColorPickerView : RelativeLayout {
                         )
                     }
                 }
-
-                else -> Unit
             }
         }
 
@@ -171,6 +173,8 @@ class ColorPickerView : RelativeLayout {
                             channelContainer.addView(it, lp)
                             it.registerListener(seekbarChangeListener)
                         }
+
+                        onSwitchColorModelListener?.onColorModelSwitched(colorModel)
                     }
                 }
 

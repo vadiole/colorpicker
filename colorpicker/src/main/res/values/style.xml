@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <style name="color_picker_button_bar" parent="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog">
         <item name="android:textColor">?android:attr/textColorPrimary</item>
         <item name="android:textAllCaps">true</item>

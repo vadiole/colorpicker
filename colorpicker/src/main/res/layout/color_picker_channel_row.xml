@@ -27,6 +27,7 @@
         android:gravity="center"
         android:minWidth="36dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:typeface="monospace"
         tools:text="255" />
 
     <SeekBar

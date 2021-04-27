@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:minWidth="64dp"
-        android:text="@string/action_cancel" />
+        android:text="@android:string/cancel" />
 
     <Button
         android:id="@+id/positive_button"
@@ -18,5 +18,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:minWidth="64dp"
-        android:text="@string/action_ok" />
+        android:text="@android:string/ok" />
 </LinearLayout>

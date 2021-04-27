@@ -5,11 +5,15 @@ import android.os.Bundle
 import androidx.annotation.ColorInt
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
+import androidx.core.graphics.ColorUtils
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import kotlin.properties.Delegates
 
 
+/**
+ * A subclass of DialogFragment with color picker dialog
+ */
 class ColorPickerDialog internal constructor() : DialogFragment() {
 
     companion object {
@@ -28,14 +32,20 @@ class ColorPickerDialog internal constructor() : DialogFragment() {
             colorModelSwitchEnabled: Boolean,
         ): ColorPickerDialog {
             val fragment = ColorPickerDialog()
-            fragment.arguments =
-                makeArgs(
-                    actionOk,
-                    actionCancel,
-                    initialColor,
-                    colorModel,
-                    colorModelSwitchEnabled
-                )
+
+            val initialColorCorrectAlpha = if (colorModel != ColorModel.ARGB) {
+                ColorUtils.setAlphaComponent(initialColor, 255)
+            } else {
+                initialColor
+            }
+
+            fragment.arguments = makeArgs(
+                actionOk,
+                actionCancel,
+                initialColorCorrectAlpha,
+                colorModel,
+                colorModelSwitchEnabled
+            )
             return fragment
         }
 
@@ -68,18 +78,19 @@ class ColorPickerDialog internal constructor() : DialogFragment() {
         private var colorModelSwitchEnabled = true
 
         @StringRes
-        private var actionOkStringRes: Int = R.string.action_ok
+        private var actionOkStringRes: Int = android.R.string.ok
 
         @StringRes
-        private var actionCancelStringRes: Int = R.string.action_cancel
-        private var listener: OnPickColorListener? = null
+        private var actionCancelStringRes: Int = android.R.string.cancel
+        private var selectColorListener: OnSelectColorListener? = null
+        private var switchColorModelListenerListener: OnSwitchColorModelListener? = null
 
 
         /**
          * Set initial color for a color picker dialog.
-         * Default - Color.GRAY
+         * Default - Color.GRAY.
          * <p>
-         * @param initialColor the color that will using as default in color picker dialog
+         * @param initialColor the color that will using as default in color picker dialog.
          */
         fun setInitialColor(@ColorInt initialColor: Int): Builder {
             this.initialColor = initialColor
@@ -89,9 +100,9 @@ class ColorPickerDialog internal constructor() : DialogFragment() {
 
         /**
          * Set string resource for positive button.
-         * Default - R.string.action_ok (OK)
+         * Default - android.R.string.ok (OK).
          * <p>
-         * @param stringId the String resource reference for positive button
+         * @param stringId the String resource reference for positive button.
          */
         fun setButtonOkText(@StringRes stringId: Int): Builder {
             actionOkStringRes = stringId
@@ -100,9 +111,9 @@ class ColorPickerDialog internal constructor() : DialogFragment() {
 
         /**
          * Set string resource for negative button.
-         * Default - R.string.action_cancel (Cancel)
+         * Default - android.R.string.cancel (Cancel).
          * <p>
-         * @param stringId the String resource reference for negative button
+         * @param stringId the String resource reference for negative button.
          */
         fun setButtonCancelText(@StringRes stringId: Int): Builder {
             actionCancelStringRes = stringId
@@ -112,7 +123,7 @@ class ColorPickerDialog internal constructor() : DialogFragment() {
         /**
          * Set color mode for a color picker dialog.
          * <p>
-         * @param colorModel the colorMode for the color picker dialog.
+         * @param colorModel the colorMode for the color picker dialog
          *
          * Can be one of:
          * @see ColorModel.ARGB - alpha, red, green, blue.
@@ -126,7 +137,7 @@ class ColorPickerDialog internal constructor() : DialogFragment() {
 
         /**
          * Sets whether the color model can be switched.
-         * <strong>Note:</strong> it will work only if color model is ColorModel.RGB or ColorModel.HSV .
+         * <strong>Note:</strong> it will work only if color model is ColorModel.RGB or ColorModel.HSV.
          * <p>
          * @param enabled is switching enabled.
          */
@@ -137,27 +148,51 @@ class ColorPickerDialog internal constructor() : DialogFragment() {
         }
 
         /**
-         * Set callback for a color picker dialog to return color.
-         * <p>
-         * @param callback thc callback to return color from color picker dialog.
-         */
-        fun onColorSelected(callback: OnPickColorListener): Builder {
-            this.listener = callback
-            return this
-        }
-
-        /**
          * Set callback for a color picker dialog to return color, lambda edition.
          * <p>
-         * @param callback thc callback to return color from color picker dialog.
+         * @param callback the callback to return color from color picker dialog.
          */
         fun onColorSelected(callback: (color: Int) -> Unit): Builder {
-            this.listener = object : OnPickColorListener {
+            this.selectColorListener = object : OnSelectColorListener {
                 override fun onColorSelected(color: Int) {
                     callback(color)
                 }
 
             }
+            return this
+        }
+
+        /**
+         * Set callback for a color picker dialog to return color.
+         * <p>
+         * @param callback the callback to return color from color picker dialog.
+         */
+        fun onColorSelected(callback: OnSelectColorListener): Builder {
+            this.selectColorListener = callback
+            return this
+        }
+
+        /**
+         * Set callback for a color picker dialog to return new color model, lambda edition.
+         * <p>
+         * @param callback the callback to return new color model from color picker dialog.
+         */
+        fun onColorModelSwitched(callback: (colorModel: ColorModel) -> Unit): Builder {
+            this.switchColorModelListenerListener = object : OnSwitchColorModelListener {
+                override fun onColorModelSwitched(colorModel: ColorModel) {
+                    callback(colorModel)
+                }
+            }
+            return this
+        }
+
+        /**
+         * Set callback for a color picker dialog to return new color model.
+         * <p>
+         * @param callback the callback to return new color model from color picker dialog.
+         */
+        fun onColorModelSwitched(callback: OnSwitchColorModelListener): Builder {
+            this.switchColorModelListenerListener = callback
             return this
         }
 
@@ -171,7 +206,7 @@ class ColorPickerDialog internal constructor() : DialogFragment() {
          */
         fun create(): ColorPickerDialog {
             requireNotNull(
-                listener,
+                selectColorListener,
                 { "You must call onColorSelected() before call create()" }
             )
             val fragment = newInstance(
@@ -181,13 +216,81 @@ class ColorPickerDialog internal constructor() : DialogFragment() {
                 colorModel,
                 colorModelSwitchEnabled
             )
-            fragment.listener = listener
+            fragment.onSelectColorListener = selectColorListener
+            fragment.onSwitchColorModelListener = switchColorModelListenerListener
             return fragment
         }
     }
 
-    private var listener: OnPickColorListener? = null
+    private var onSelectColorListener: OnSelectColorListener? = null
+    private var onSwitchColorModelListener: OnSwitchColorModelListener? = null
     var pickerView: ColorPickerView by Delegates.notNull()
+
+    /**
+     * Set callback for a color picker dialog to return color, lambda edition.
+     * You should call this method in case your activity/fragment was restored.
+     *
+     * <code>NOTE: find dialog instance by
+     * supportFragmentManager.findFragmentByTag("your_tag_from_show()_method") as ColorPickerDialog?    in activity
+     * childFragmentManager.findFragmentByTag("your_tag_from_show()_method") as ColorPickerDialog?    in fragment</code>
+     * <p>
+     * @param callback the callback to return color from color picker dialog.
+     */
+    fun setOnSelectColorListener(callback: (color: Int) -> Unit) {
+        this.onSelectColorListener = object : OnSelectColorListener {
+            override fun onColorSelected(color: Int) {
+                callback(color)
+            }
+
+        }
+    }
+
+    /**
+     * Set callback for a color picker dialog to return color.
+     * You should call this method in case your activity/fragment was restored.
+     *
+     * <code>NOTE: find dialog instance by
+     * supportFragmentManager.findFragmentByTag("your_tag_from_show()_method") as ColorPickerDialog?    in activity
+     * childFragmentManager.findFragmentByTag("your_tag_from_show()_method") as ColorPickerDialog?    in fragment</code>
+     * <p>
+     * @param callback the callback to return color from color picker dialog.
+     */
+
+    fun setOnSelectColorListener(callback: OnSelectColorListener) {
+        this.onSelectColorListener = callback
+    }
+
+    /**
+     * Set callback for a color picker dialog to return new color model, lambda edition.
+     * You should call this method in case your activity/fragment was restored.
+     *
+     * <code>NOTE: find dialog instance by
+     * supportFragmentManager.findFragmentByTag("your_tag_from_show()_method") as ColorPickerDialog?    in activity
+     * childFragmentManager.findFragmentByTag("your_tag_from_show()_method") as ColorPickerDialog?    in fragment</code>
+     * <p>
+     * @param callback the callback to return new color model from color picker dialog.
+     */
+    fun setOnSwitchColorModelListener(callback: (colorModel: ColorModel) -> Unit) {
+        this.onSwitchColorModelListener = object : OnSwitchColorModelListener {
+            override fun onColorModelSwitched(colorModel: ColorModel) {
+                callback(colorModel)
+            }
+        }
+    }
+
+    /**
+     * Set callback for a color picker dialog to return new color model.
+     * You should call this method in case your activity/fragment was restored.
+     *
+     * <code>NOTE: find dialog instance by
+     * supportFragmentManager.findFragmentByTag("your_tag_from_show()_method") as ColorPickerDialog?    in activity
+     * childFragmentManager.findFragmentByTag("your_tag_from_show()_method") as ColorPickerDialog?    in fragment</code>
+     * <p>
+     * @param callback the callback to return new color model from color picker dialog.
+     */
+    fun setOnSwitchColorModelListener(callback: OnSwitchColorModelListener) {
+        this.onSwitchColorModelListener = callback
+    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val bundle = savedInstanceState ?: arguments!!
@@ -201,12 +304,13 @@ class ColorPickerDialog internal constructor() : DialogFragment() {
             bundle.getInt(INITIAL_COLOR_KEY),
             ColorModel.fromName(bundle.getString(COLOR_MODEL_NAME_KEY)),
             bundle.getBoolean(COLOR_MODEL_SWITCH_KEY),
+            onSwitchColorModelListener
         )
 
         pickerView.enableButtonBar(object : ColorPickerView.ButtonBarListener {
             override fun onNegativeButtonClick() = dismiss()
             override fun onPositiveButtonClick(color: Int) {
-                listener?.onColorSelected(color)
+                onSelectColorListener?.onColorSelected(color)
                 dismiss()
             }
         })
@@ -229,7 +333,8 @@ class ColorPickerDialog internal constructor() : DialogFragment() {
     }
 
     override fun onDestroyView() {
-        listener = null
+        onSelectColorListener = null
+        onSwitchColorModelListener = null
         super.onDestroyView()
     }
 }

@@ -3,7 +3,7 @@ package vadiole.colorpicker
 import androidx.annotation.ColorInt
 
 
-interface OnPickColorListener {
+interface OnSelectColorListener {
     fun onColorSelected(@ColorInt color: Int)
 }
 
