@@ -10,7 +10,6 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import kotlin.properties.Delegates
 
-
 /**
  * A subclass of DialogFragment with color picker dialog
  */
@@ -137,7 +136,8 @@ class ColorPickerDialog internal constructor() : DialogFragment() {
 
         /**
          * Sets whether the color model can be switched.
-         * <strong>Note:</strong> it will work only if color model is ColorModel.RGB or ColorModel.HSV.
+         *
+         * **Note:** it will work only if color model is ColorModel.RGB or ColorModel.HSV.
          * <p>
          * @param enabled is switching enabled.
          */
@@ -149,7 +149,7 @@ class ColorPickerDialog internal constructor() : DialogFragment() {
 
         /**
          * Set callback for a color picker dialog to return color, lambda edition.
-         * <p>
+         *
          * @param callback the callback to return color from color picker dialog.
          */
         fun onColorSelected(callback: (color: Int) -> Unit): Builder {
@@ -157,14 +157,13 @@ class ColorPickerDialog internal constructor() : DialogFragment() {
                 override fun onColorSelected(color: Int) {
                     callback(color)
                 }
-
             }
             return this
         }
 
         /**
          * Set callback for a color picker dialog to return color.
-         * <p>
+         *
          * @param callback the callback to return color from color picker dialog.
          */
         fun onColorSelected(callback: OnSelectColorListener): Builder {
@@ -174,7 +173,7 @@ class ColorPickerDialog internal constructor() : DialogFragment() {
 
         /**
          * Set callback for a color picker dialog to return new color model, lambda edition.
-         * <p>
+         *
          * @param callback the callback to return new color model from color picker dialog.
          */
         fun onColorModelSwitched(callback: (colorModel: ColorModel) -> Unit): Builder {
@@ -188,7 +187,7 @@ class ColorPickerDialog internal constructor() : DialogFragment() {
 
         /**
          * Set callback for a color picker dialog to return new color model.
-         * <p>
+         *
          * @param callback the callback to return new color model from color picker dialog.
          */
         fun onColorModelSwitched(callback: OnSwitchColorModelListener): Builder {
@@ -197,11 +196,10 @@ class ColorPickerDialog internal constructor() : DialogFragment() {
         }
 
         /**
-         * Creates an ColorPickerDialog with the arguments supplied to this
-         * builder.
-         * <p>
+         * Creates an [ColorPickerDialog] with the arguments supplied to this builder.
+         *
          * Calling this method does not display the dialog. If no additional
-         * processing is needed, {@link #show()} may be called instead to both
+         * processing is needed, [show] may be called instead to both
          * create and display the dialog.
          */
         fun create(): ColorPickerDialog {
@@ -227,9 +225,13 @@ class ColorPickerDialog internal constructor() : DialogFragment() {
      * Set callback for a color picker dialog to return color, lambda edition.
      * You should call this method in case your activity/fragment was restored.
      *
-     * <code>NOTE: find dialog instance by
-     * supportFragmentManager.findFragmentByTag("your_tag_from_show()_method") as ColorPickerDialog?    in activity
-     * childFragmentManager.findFragmentByTag("your_tag_from_show()_method") as ColorPickerDialog?    in fragment</code>
+     * NOTE: find dialog instance by
+     * ```
+     * // In Activity
+     * supportFragmentManager.findFragmentByTag("your_tag_from_show()_method") as ColorPickerDialog?
+     * // In Fragment
+     * childFragmentManager.findFragmentByTag("your_tag_from_show()_method") as ColorPickerDialog?
+     * ```
      * <p>
      * @param callback the callback to return color from color picker dialog.
      */
@@ -246,9 +248,13 @@ class ColorPickerDialog internal constructor() : DialogFragment() {
      * Set callback for a color picker dialog to return color.
      * You should call this method in case your activity/fragment was restored.
      *
-     * <code>NOTE: find dialog instance by
-     * supportFragmentManager.findFragmentByTag("your_tag_from_show()_method") as ColorPickerDialog?    in activity
-     * childFragmentManager.findFragmentByTag("your_tag_from_show()_method") as ColorPickerDialog?    in fragment</code>
+     * NOTE: find dialog instance by
+     * ```
+     * // In Activity
+     * supportFragmentManager.findFragmentByTag("your_tag_from_show()_method") as ColorPickerDialog?
+     * // In Fragment
+     * childFragmentManager.findFragmentByTag("your_tag_from_show()_method") as ColorPickerDialog?
+     * ```
      * <p>
      * @param callback the callback to return color from color picker dialog.
      */
@@ -261,9 +267,13 @@ class ColorPickerDialog internal constructor() : DialogFragment() {
      * Set callback for a color picker dialog to return new color model, lambda edition.
      * You should call this method in case your activity/fragment was restored.
      *
-     * <code>NOTE: find dialog instance by
-     * supportFragmentManager.findFragmentByTag("your_tag_from_show()_method") as ColorPickerDialog?    in activity
-     * childFragmentManager.findFragmentByTag("your_tag_from_show()_method") as ColorPickerDialog?    in fragment</code>
+     * NOTE: find dialog instance by
+     * ```
+     * // In Activity
+     * supportFragmentManager.findFragmentByTag("your_tag_from_show()_method") as ColorPickerDialog?
+     * // In Fragment
+     * childFragmentManager.findFragmentByTag("your_tag_from_show()_method") as ColorPickerDialog?
+     * ```
      * <p>
      * @param callback the callback to return new color model from color picker dialog.
      */
@@ -279,9 +289,13 @@ class ColorPickerDialog internal constructor() : DialogFragment() {
      * Set callback for a color picker dialog to return new color model.
      * You should call this method in case your activity/fragment was restored.
      *
-     * <code>NOTE: find dialog instance by
-     * supportFragmentManager.findFragmentByTag("your_tag_from_show()_method") as ColorPickerDialog?    in activity
-     * childFragmentManager.findFragmentByTag("your_tag_from_show()_method") as ColorPickerDialog?    in fragment</code>
+     * NOTE: find dialog instance by
+     * ```
+     * // In Activity
+     * supportFragmentManager.findFragmentByTag("your_tag_from_show()_method") as ColorPickerDialog?
+     * // In Fragment
+     * childFragmentManager.findFragmentByTag("your_tag_from_show()_method") as ColorPickerDialog?
+     * ```
      * <p>
      * @param callback the callback to return new color model from color picker dialog.
      */

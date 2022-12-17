@@ -13,7 +13,9 @@ import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.view.doOnLayout
-import vadiole.colorpicker.ColorModel.*
+import vadiole.colorpicker.ColorModel.ARGB
+import vadiole.colorpicker.ColorModel.HSV
+import vadiole.colorpicker.ColorModel.RGB
 
 class ColorPickerView : RelativeLayout {
 
@@ -24,7 +26,6 @@ class ColorPickerView : RelativeLayout {
         const val defaultActionOk = android.R.string.ok
         const val defaultActionCancel = android.R.string.cancel
     }
-
 
     @ColorInt
     var currentColor: Int
@@ -196,20 +197,18 @@ class ColorPickerView : RelativeLayout {
         fun onNegativeButtonClick()
     }
 
-    internal fun enableButtonBar(listener: ButtonBarListener?) {
+    internal fun enableButtonBar(listener: ButtonBarListener) {
         with(findViewById<LinearLayout>(R.id.button_bar)) {
-            val positiveButton = findViewById<Button>(R.id.positive_button)
-            val negativeButton = findViewById<Button>(R.id.negative_button)
-
-            if (listener != null) {
-                visibility = VISIBLE
-                positiveButton.setOnClickListener { listener.onPositiveButtonClick(currentColor) }
-                negativeButton.setOnClickListener { listener.onNegativeButtonClick() }
-            } else {
-                visibility = GONE
-                positiveButton.setOnClickListener(null)
-                negativeButton.setOnClickListener(null)
+            val positiveButton = findViewById<Button>(R.id.positive_button).apply {
+                setText(actionOkRes)
             }
+            val negativeButton = findViewById<Button>(R.id.negative_button).apply {
+                setText(actionCancelRes)
+            }
+
+            visibility = VISIBLE
+            positiveButton.setOnClickListener { listener.onPositiveButtonClick(currentColor) }
+            negativeButton.setOnClickListener { listener.onNegativeButtonClick() }
         }
     }
 }
