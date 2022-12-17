@@ -35,7 +35,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/color_picker_demo"
-        app:layout_constraintWidth_percent="0.7">
+        app:layout_constraintHeight_percent="0.3">
 
         <View
             android:id="@+id/color_view"
