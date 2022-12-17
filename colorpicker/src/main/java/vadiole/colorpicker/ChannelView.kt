@@ -9,7 +9,6 @@ import android.graphics.Paint.Style
 import android.graphics.Shader.TileMode.REPEAT
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.GradientDrawable.Orientation.LEFT_RIGHT
-import android.graphics.drawable.LayerDrawable
 import android.graphics.drawable.RippleDrawable
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.RectShape
@@ -84,20 +83,19 @@ internal class ChannelView(
             }
         }
 
-    private var gradientDrawable = GradientDrawable().apply {
-        cornerRadius = 100f
-        colors = gradientColors
-        orientation = LEFT_RIGHT
-        gradientType = GradientDrawable.LINEAR_GRADIENT
-    }
-
-
-    private var alphaGradient = object : LayerDrawable(arrayOf(gradientDrawable)) {
-        private var bounds = RectF(getDrawable(0).bounds)
+    private var gradientDrawable = object : GradientDrawable() {
+        private var bounds = RectF()
         private val textureShader = BitmapShader(alphaTexture, REPEAT, REPEAT)
         private val texturePaint = Paint(ANTI_ALIAS_FLAG).apply {
             style = Style.FILL
             shader = textureShader
+        }
+
+        init {
+            cornerRadius = 100f
+            colors = gradientColors
+            orientation = LEFT_RIGHT
+            gradientType = LINEAR_GRADIENT
         }
 
         override fun onBoundsChange(newBounds: Rect) {
@@ -106,21 +104,12 @@ internal class ChannelView(
         }
 
         override fun draw(canvas: Canvas) {
-            val gradient = getDrawable(0)
-
-            // Draw rounded corners rect with shader
-            canvas.drawRoundRect(
-                bounds,
-                100f,
-                100f,
-                texturePaint
-            )
-
-            // Draw gradient
-            gradient.draw(canvas)
+            if (channel.background == ColorModel.GradientBackground.ALPHA) {
+                canvas.drawRoundRect(bounds, 100f, 100f, texturePaint)
+            }
+            super.draw(canvas)
         }
     }
-
 
     init {
         setLayerType(View.LAYER_TYPE_SOFTWARE, null)
@@ -160,7 +149,6 @@ internal class ChannelView(
             thumbTintList = ColorStateList.valueOf(thumbColor)
             when (channel.background) {
                 NONE -> Unit
-                ColorModel.GradientBackground.ALPHA -> progressDrawable = alphaGradient
                 else -> progressDrawable = gradientDrawable
             }
             setOnSeekBarChangeListener(
