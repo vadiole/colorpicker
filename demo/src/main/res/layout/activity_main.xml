@@ -5,113 +5,94 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/alpha_texture"
-    tools:context=".MainActivity"
-    >
-
-    <View
-        android:id="@+id/color_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white_60a"
-        />
-
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@color/white_60a"
-        app:layout_constraintBottom_toBottomOf="@id/checkbox_use_alpha"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/chackbox_enabled_switch"
-        />
-
+    android:fitsSystemWindows="true"
+    tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/color_picker_demo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white_60a"
         android:gravity="center"
         android:padding="8dp"
-        android:text="Color Picker Demo"
+        android:text="@string/app_name"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/button_pick_color"
+        android:textColor="@color/text"
+        android:typeface="monospace"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.382"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/color_picker_message"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@color/white_60a"
-        android:gravity="center"
-        android:padding="24dp"
-        android:text="@string/switch_message"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textColor="@color/black"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+    <FrameLayout
+        android:id="@+id/color_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/alpha_texture"
+        app:layout_constraintBottom_toTopOf="@+id/color_model_switching_toggle"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/color_picker_demo"
-        />
+        app:layout_constraintWidth_percent="0.7">
 
+        <View
+            android:id="@+id/color_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/darker_gray" />
+    </FrameLayout>
 
-    <androidx.appcompat.widget.AppCompatCheckBox
-        android:id="@+id/chackbox_enabled_switch"
+    <View
         android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginBottom="8dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintBottom_toTopOf="@+id/color_model_switching_toggle" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/color_model_switching_toggle"
+        android:layout_width="match_parent"
+        android:paddingHorizontal="24dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:padding="8dp"
+        android:paddingVertical="12dp"
+        android:textColor="@android:color/black"
         android:text="@string/switch_color_model"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/checkbox_use_alpha"
+        android:typeface="monospace"
+        app:layout_constraintBottom_toTopOf="@+id/alpha_channel_toggle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatCheckBox
-        android:id="@+id/checkbox_use_alpha"
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/alpha_channel_toggle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="24dp"
-        android:padding="8dp"
+        android:layout_marginBottom="8dp"
+        android:paddingHorizontal="24dp"
+        android:paddingVertical="12dp"
+        android:textColor="@android:color/black"
         android:text="@string/use_alpha"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/button_pick_color"
+        android:typeface="monospace"
+        app:layout_constraintBottom_toTopOf="@+id/pick_color_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button_pick_color"
-        style="@style/Widget.AppCompat.Button.Colored"
+    <Button
+        android:id="@+id/pick_color_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:textAllCaps="false"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="48dp"
+        android:typeface="monospace"
         android:minHeight="64dp"
-
         android:text="@string/pick_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

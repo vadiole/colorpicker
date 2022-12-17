@@ -205,10 +205,7 @@ class ColorPickerDialog internal constructor() : DialogFragment() {
          * create and display the dialog.
          */
         fun create(): ColorPickerDialog {
-            requireNotNull(
-                selectColorListener,
-                { "You must call onColorSelected() before call create()" }
-            )
+            requireNotNull(selectColorListener) { "You must call onColorSelected() before call create()" }
             val fragment = newInstance(
                 actionOkStringRes,
                 actionCancelStringRes,
@@ -293,7 +290,7 @@ class ColorPickerDialog internal constructor() : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val bundle = savedInstanceState ?: arguments!!
+        val bundle = savedInstanceState ?: requireArguments()
         val actionOk = bundle.getInt(ACTION_OK_KEY)
         val actionCancel = bundle.getInt(ACTION_CANCEL_KEY)
 
@@ -307,13 +304,15 @@ class ColorPickerDialog internal constructor() : DialogFragment() {
             onSwitchColorModelListener
         )
 
-        pickerView.enableButtonBar(object : ColorPickerView.ButtonBarListener {
-            override fun onNegativeButtonClick() = dismiss()
-            override fun onPositiveButtonClick(color: Int) {
-                onSelectColorListener?.onColorSelected(color)
-                dismiss()
+        pickerView.enableButtonBar(
+            object : ColorPickerView.ButtonBarListener {
+                override fun onNegativeButtonClick() = dismiss()
+                override fun onPositiveButtonClick(color: Int) {
+                    onSelectColorListener?.onColorSelected(color)
+                    dismiss()
+                }
             }
-        })
+        )
 
         return AlertDialog.Builder(requireContext())
             .setView(pickerView)

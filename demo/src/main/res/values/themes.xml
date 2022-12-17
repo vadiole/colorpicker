@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Theme.ColorPickerDemo" parent="android:Theme.Material.NoActionBar">
+    <style name="Theme.ColorPickerDemo" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@color/window_background</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
