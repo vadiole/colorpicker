@@ -21,37 +21,37 @@ dependencies {
 ### Usage
 ```kotlin
 
-//  create dialog
+// Create dialog
 val colorPicker: ColorPickerDialog = ColorPickerDialog.Builder()
 
-                //  set initial (default) color
+                // Set initial (default) color
                 .setInitialColor(currentColor)
 
-                //  set Color Model. ARGB, RGB or HSV
+                // Set Color Model. ARGB, RGB or HSV
                 .setColorModel(ColorModel.HSV)
 
-                //  set is user be able to switch color model
+                // Set is user be able to switch color model
                 .setColorModelSwitchEnabled(true)
 
-                //  set your localized string resource for OK button
+                // Set your localized string resource for OK button
                 .setButtonOkText(android.R.string.ok)
 
-                //  set your localized string resource for Cancel button
+                // Set your localized string resource for Cancel button
                 .setButtonCancelText(android.R.string.cancel)
 
-                //  callback for picked color (required)
+                // Callback for picked color (required)
                 .onColorSelected { color: Int ->
-                    //  use color
+                    // Use color
                 }
 
-                //  create dialog
+                // Create dialog
                 .create()
                 
                 
-//  show dialog from Activity
+// Show dialog from Activity
 colorPicker.show(supportFragmentManager, "color_picker") 
 
-//  show dialog from Fragment
+// Show dialog from Fragment
 colorPicker.show(childFragmentManager, "color_picker")      
 ```
 

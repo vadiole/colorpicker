@@ -26,17 +26,16 @@ class MainActivity : AppCompatActivity() {
         val useAlpha = findViewById<CheckBox>(R.id.checkbox_use_alpha)
         val colorModelSwitchEnabled = findViewById<CheckBox>(R.id.chackbox_enabled_switch)
 
-
-        //  restore color and listeners after activity recreate
+        // Restore color and listeners after activity recreate
         if (savedInstanceState != null) {
             currentColor = savedInstanceState.getInt(colorKey)
 
             val colorPicker = supportFragmentManager.findFragmentByTag("color_picker") as ColorPickerDialog?
             colorPicker?.setOnSelectColorListener { color ->
-                //  save color to variable
+                // Save color to variable
                 currentColor = color
 
-                //  set background color to view result
+                // Set background color to view result
                 colorView.setBackgroundColor(color)
             }
 
@@ -45,58 +44,55 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
-
-        //  set current color as background
+        // Set current color as background
         colorView.setBackgroundColor(currentColor)
 
-        //  when button click -> pick color
+        // When button click -> pick color
         pickColor.setOnClickListener {
 
-            //  Create Builder
+            // Create Builder
             val colorPicker: ColorPickerDialog = ColorPickerDialog.Builder()
-                //  set initial (default) color
+                // Set initial (default) color
                 .setInitialColor(currentColor)
 
-                //  set Color Model. If use alpha - ARGB, else RGB. Use what your want
+                // Set Color Model. If use alpha - ARGB, else RGB. Use what your want
                 .setColorModel(if (useAlpha.isChecked) ColorModel.ARGB else ColorModel.RGB)
 
-                //  set is user be able to switch color model. If ARGB - switch not available
+                // Set is user be able to switch color model. If ARGB - switch not available
                 .setColorModelSwitchEnabled(colorModelSwitchEnabled.isChecked)
 
-                //  set your localized string resource for OK button
+                // Set your localized string resource for OK button
                 .setButtonOkText(R.string.action_ok)
 
-                //  set your localized string resource for Cancel button
+                // Set your localized string resource for Cancel button
                 .setButtonCancelText(R.string.action_cancel)
 
-                //  callback for switched color model
+                // Callback for switched color model
                 .onColorModelSwitched { colorModel ->
                     Toast.makeText(this, "Switched to ${colorModel.name}", Toast.LENGTH_SHORT).show()
                 }
 
-                //  callback for picked color (required)
+                // Callback for picked color (required)
                 .onColorSelected { color: Int ->
 
-                    //  save color to variable
+                    // Save color to variable
                     currentColor = color
 
-                    //  set background color to view result
+                    // Set background color to view result
                     colorView.setBackgroundColor(color)
                 }
 
-                //  create dialog
+                // Create dialog
                 .create()
 
-
-            //  show color picker with supportFragmentManager (or childFragmentManager in Fragment)
+            // Show color picker with supportFragmentManager (or childFragmentManager in Fragment)
             colorPicker.show(supportFragmentManager, "color_picker")
         }
 
 
     }
 
-    //  save current color when
+    // Save current color to bundle before activity will be destroyed
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt(colorKey, currentColor)

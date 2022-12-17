@@ -4,7 +4,7 @@ apply plugin: 'signing'
 task androidSourcesJar(type: Jar) {
     archiveClassifier.set('sources')
     if (project.plugins.findPlugin("com.android.library")) {
-        //  For Android libraries
+        // For Android libraries
         from android.sourceSets.main.java.srcDirs
         from android.sourceSets.main.kotlin.srcDirs
     } else {
@@ -27,15 +27,14 @@ ext["signing.secretKeyRingFile"] = ''
 ext["ossrhUsername"] = ''
 ext["ossrhPassword"] = ''
 ext["sonatypeStagingProfileId"] = ''
-
-File secretPropsFile = project.rootProject.file('secret.properties')
-Properties p = new Properties()
-new FileInputStream(secretPropsFile).withCloseable { is ->
-    p.load(is)
-}
-p.each { name, value ->
-    ext[name] = value
-}
+//File secretPropsFile = project.rootProject.file('secret.properties')
+//Properties p = new Properties()
+//new FileInputStream(secretPropsFile).withCloseable { is ->
+//    p.load(is)
+//}
+//p.each { name, value ->
+//    ext[name] = value
+//}
 
 afterEvaluate {
     publishing {

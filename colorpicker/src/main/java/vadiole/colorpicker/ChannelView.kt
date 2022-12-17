@@ -1,6 +1,5 @@
 package vadiole.colorpicker
 
-
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
@@ -24,7 +23,6 @@ import androidx.core.graphics.blue
 import androidx.core.graphics.green
 import androidx.core.graphics.red
 import vadiole.colorpicker.ColorModel.GradientBackground.*
-
 
 @SuppressLint("ViewConstructor")
 internal class ChannelView(
@@ -87,10 +85,10 @@ internal class ChannelView(
         }
 
     private var gradientDrawable = GradientDrawable().apply {
+        cornerRadius = 100f
         colors = gradientColors
         orientation = LEFT_RIGHT
         gradientType = GradientDrawable.LINEAR_GRADIENT
-        cornerRadius = 100f
     }
 
 
@@ -102,7 +100,7 @@ internal class ChannelView(
             shader = textureShader
         }
 
-        override fun onBoundsChange(newBounds: Rect?) {
+        override fun onBoundsChange(newBounds: Rect) {
             super.onBoundsChange(newBounds)
             bounds = RectF(newBounds)
         }
@@ -110,7 +108,7 @@ internal class ChannelView(
         override fun draw(canvas: Canvas) {
             val gradient = getDrawable(0)
 
-            //  draw rounded corners rect with shader
+            // Draw rounded corners rect with shader
             canvas.drawRoundRect(
                 bounds,
                 100f,
@@ -118,7 +116,7 @@ internal class ChannelView(
                 texturePaint
             )
 
-            //  draw gradient
+            // Draw gradient
             gradient.draw(canvas)
         }
     }
@@ -127,34 +125,31 @@ internal class ChannelView(
     init {
         setLayerType(View.LAYER_TYPE_SOFTWARE, null)
         channel.progress = channel.extractor.invoke(color)
-
         if (channel.progress < channel.min || channel.progress > channel.max) {
             throw IllegalArgumentException(
                 "Initial progress for channel: ${channel.javaClass.simpleName}"
                         + " must be between ${channel.min} and ${channel.max}."
             )
         }
-
         val rootView = inflate(context, R.layout.color_picker_channel_row, this)
         bindViews(rootView)
     }
 
     private fun bindViews(root: View) {
-        //  channel name
+        // Channel name
         val label = root.findViewById(R.id.label) as TextView
         label.text = channel.name
         label.setTextColor(textColor)
 
-        //  channel progress
+        // Channel progress
         val progressView = root.findViewById(R.id.progress_text) as TextView
         progressView.text = channel.progress.toString()
         progressView.setTextColor(textColor)
 
-        //  channel seekbar
+        // Channel seekbar
         seekbar = root.findViewById<SeekBar>(R.id.seekbar).apply {
             max = channel.max
             progress = channel.progress
-
             background = RippleDrawable(
                 ColorStateList.valueOf(rippleColor),
                 null,
@@ -163,59 +158,48 @@ internal class ChannelView(
                 }
             )
             thumbTintList = ColorStateList.valueOf(thumbColor)
-
             when (channel.background) {
                 NONE -> Unit
-                ColorModel.GradientBackground.ALPHA -> {
-                    progressDrawable = alphaGradient
-                }
+                ColorModel.GradientBackground.ALPHA -> progressDrawable = alphaGradient
                 else -> progressDrawable = gradientDrawable
             }
+            setOnSeekBarChangeListener(
+                object : SeekBar.OnSeekBarChangeListener {
+                    override fun onStartTrackingTouch(seekbar: SeekBar?) {}
 
-            setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-                override fun onStartTrackingTouch(seekbar: SeekBar?) {}
+                    override fun onStopTrackingTouch(seekbar: SeekBar?) {}
 
-                override fun onStopTrackingTouch(seekbar: SeekBar?) {}
-
-                override fun onProgressChanged(
-                    seekbar: SeekBar?,
-                    progress: Int,
-                    fromUser: Boolean
-                ) {
-                    Log.i("Seekbar", "onProgressChanged: $progress ")
-                    channel.progress = progress
-
-                    progressView.text = progress.toString()
-                    listener?.invoke()
+                    override fun onProgressChanged(seekbar: SeekBar?, progress: Int, fromUser: Boolean) {
+                        Log.i("Seekbar", "onProgressChanged: $progress ")
+                        channel.progress = progress
+                        progressView.text = progress.toString()
+                        listener?.invoke()
+                    }
                 }
-            })
+            )
         }
     }
 
     fun setTintHSV(hue: Int, saturation: Int, value: Int) {
         if (channel.background == SATURATION || channel.background == VALUE) {
-
             if (saturation > 0) lastSaturation = saturation / 100f
             lastHue = hue.toFloat()
             lastValue = value / 100f
-
             gradientDrawable.colors = gradientColors
         }
     }
 
     fun setTintRGB(red: Int, green: Int, blue: Int) = when (channel.background) {
         RED, GREEN, BLUE, ColorModel.GradientBackground.ALPHA -> {
-
             lastRed = red
             lastGreen = green
             lastBlue = blue
-
             gradientDrawable.colors = gradientColors
         }
         else -> Unit
     }
 
-    fun registerListener(listener: () -> Unit): Unit {
+    fun registerListener(listener: () -> Unit) {
         this.listener = listener
     }
 
@@ -223,11 +207,4 @@ internal class ChannelView(
         super.onDetachedFromWindow()
         this.listener = null
     }
-
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-
-    }
-
-
 }
