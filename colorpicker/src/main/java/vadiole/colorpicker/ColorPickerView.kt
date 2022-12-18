@@ -195,7 +195,7 @@ class ColorPickerView : RelativeLayout {
                 }
 
                 with(channelViews[0].findViewById<View>(R.id.label)) {
-                    val params = LayoutParams(width, height * 3).apply {
+                    val params = LayoutParams(width, height * channelViews.size).apply {
                         leftMargin = left
                         topMargin = top
                         addRule(ALIGN_TOP, R.id.channel_container)
