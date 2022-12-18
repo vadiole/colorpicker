@@ -1,6 +1,5 @@
 package vadiole.colorpicker
 
-
 import android.graphics.Color
 import vadiole.colorpicker.ColorModel.GradientBackground.ALPHA
 import vadiole.colorpicker.ColorModel.GradientBackground.BLUE

@@ -64,7 +64,6 @@ class ColorPickerDialog internal constructor() : DialogFragment() {
         )
     }
 
-
     /**
      * Builder for a color picker dialog
      */
@@ -84,7 +83,6 @@ class ColorPickerDialog internal constructor() : DialogFragment() {
         private var selectColorListener: OnSelectColorListener? = null
         private var switchColorModelListenerListener: OnSwitchColorModelListener? = null
 
-
         /**
          * Set initial color for a color picker dialog.
          * Default - Color.GRAY.
@@ -94,7 +92,6 @@ class ColorPickerDialog internal constructor() : DialogFragment() {
             this.initialColor = initialColor
             return this
         }
-
 
         /**
          * Set string resource for positive button.

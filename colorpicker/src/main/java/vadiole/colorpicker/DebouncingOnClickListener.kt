@@ -3,10 +3,9 @@ package vadiole.colorpicker
 import android.view.View
 import java.util.concurrent.atomic.AtomicBoolean
 
-
-class DebouncingOnClickListener(
+internal class DebouncingOnClickListener(
     private val intervalMillis: Long,
-    private val click: ((View) -> Unit)
+    private val click: ((View) -> Unit),
 ) : View.OnClickListener {
 
     override fun onClick(v: View) {
