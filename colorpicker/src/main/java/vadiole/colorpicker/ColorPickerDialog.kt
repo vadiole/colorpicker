@@ -11,7 +11,7 @@ import androidx.fragment.app.DialogFragment
 import kotlin.properties.Delegates
 
 /**
- * A subclass of DialogFragment with color picker dialog
+ * A subclass of DialogFragment with color picker dialog.
  */
 class ColorPickerDialog internal constructor() : DialogFragment() {
 
@@ -88,7 +88,6 @@ class ColorPickerDialog internal constructor() : DialogFragment() {
         /**
          * Set initial color for a color picker dialog.
          * Default - Color.GRAY.
-         * <p>
          * @param initialColor the color that will using as default in color picker dialog.
          */
         fun setInitialColor(@ColorInt initialColor: Int): Builder {
@@ -100,7 +99,6 @@ class ColorPickerDialog internal constructor() : DialogFragment() {
         /**
          * Set string resource for positive button.
          * Default - android.R.string.ok (OK).
-         * <p>
          * @param stringId the String resource reference for positive button.
          */
         fun setButtonOkText(@StringRes stringId: Int): Builder {
@@ -111,7 +109,6 @@ class ColorPickerDialog internal constructor() : DialogFragment() {
         /**
          * Set string resource for negative button.
          * Default - android.R.string.cancel (Cancel).
-         * <p>
          * @param stringId the String resource reference for negative button.
          */
         fun setButtonCancelText(@StringRes stringId: Int): Builder {
@@ -121,7 +118,6 @@ class ColorPickerDialog internal constructor() : DialogFragment() {
 
         /**
          * Set color mode for a color picker dialog.
-         * <p>
          * @param colorModel the colorMode for the color picker dialog
          *
          * Can be one of:
@@ -138,7 +134,6 @@ class ColorPickerDialog internal constructor() : DialogFragment() {
          * Sets whether the color model can be switched.
          *
          * **Note:** it will work only if color model is ColorModel.RGB or ColorModel.HSV.
-         * <p>
          * @param enabled is switching enabled.
          */
 
@@ -232,7 +227,6 @@ class ColorPickerDialog internal constructor() : DialogFragment() {
      * // In Fragment
      * childFragmentManager.findFragmentByTag("your_tag_from_show()_method") as ColorPickerDialog?
      * ```
-     * <p>
      * @param callback the callback to return color from color picker dialog.
      */
     fun setOnSelectColorListener(callback: (color: Int) -> Unit) {
@@ -255,7 +249,6 @@ class ColorPickerDialog internal constructor() : DialogFragment() {
      * // In Fragment
      * childFragmentManager.findFragmentByTag("your_tag_from_show()_method") as ColorPickerDialog?
      * ```
-     * <p>
      * @param callback the callback to return color from color picker dialog.
      */
 
@@ -274,7 +267,6 @@ class ColorPickerDialog internal constructor() : DialogFragment() {
      * // In Fragment
      * childFragmentManager.findFragmentByTag("your_tag_from_show()_method") as ColorPickerDialog?
      * ```
-     * <p>
      * @param callback the callback to return new color model from color picker dialog.
      */
     fun setOnSwitchColorModelListener(callback: (colorModel: ColorModel) -> Unit) {
@@ -296,7 +288,6 @@ class ColorPickerDialog internal constructor() : DialogFragment() {
      * // In Fragment
      * childFragmentManager.findFragmentByTag("your_tag_from_show()_method") as ColorPickerDialog?
      * ```
-     * <p>
      * @param callback the callback to return new color model from color picker dialog.
      */
     fun setOnSwitchColorModelListener(callback: OnSwitchColorModelListener) {

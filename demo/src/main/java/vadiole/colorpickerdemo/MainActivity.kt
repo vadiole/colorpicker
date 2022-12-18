@@ -16,39 +16,21 @@ class MainActivity : AppCompatActivity() {
     private val colorKey = "KEY_COLOR"
 
     @ColorInt
-    var currentColor: Int = Color.DKGRAY
+    var currentColor: Int = Color.RED
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val colorView = findViewById<View>(R.id.color_view)
-        val pickColor = findViewById<Button>(R.id.pick_color_button)
-        val useAlpha = findViewById<SwitchCompat>(R.id.alpha_channel_toggle)
-        val colorModelSwitchEnabled = findViewById<SwitchCompat>(R.id.color_model_switching_toggle)
-
-        // Restore color and listeners after activity recreate
-        if (savedInstanceState != null) {
-            currentColor = savedInstanceState.getInt(colorKey)
-
-            val colorPicker = supportFragmentManager.findFragmentByTag("color_picker") as ColorPickerDialog?
-            colorPicker?.setOnSelectColorListener { color ->
-                // Save color to variable
-                currentColor = color
-
-                // Set background color to view result
-                colorView.setBackgroundColor(color)
-            }
-
-            colorPicker?.setOnSwitchColorModelListener { colorModel ->
-                Toast.makeText(this, "Switched to ${colorModel.name}", Toast.LENGTH_SHORT).show()
-            }
-        }
+        val pickColorButton = findViewById<Button>(R.id.pick_color_button)
+        val alphaChannelToggle = findViewById<SwitchCompat>(R.id.alpha_channel_toggle)
+        val colorModelSwitchingToggle = findViewById<SwitchCompat>(R.id.color_model_switching_toggle)
 
         // Set current color as background
         colorView.setBackgroundColor(currentColor)
 
         // When button click -> pick color
-        pickColor.setOnClickListener {
+        pickColorButton.setOnClickListener {
 
             // Create Builder
             val colorPicker: ColorPickerDialog = ColorPickerDialog.Builder()
@@ -56,10 +38,10 @@ class MainActivity : AppCompatActivity() {
                 .setInitialColor(currentColor)
 
                 // Set Color Model. If use alpha - ARGB, else RGB. Use what your want
-                .setColorModel(if (useAlpha.isChecked) ColorModel.ARGB else ColorModel.RGB)
+                .setColorModel(if (alphaChannelToggle.isChecked) ColorModel.ARGB else ColorModel.RGB)
 
-                // Set is user be able to switch color model. If ARGB - switch not available
-                .setColorModelSwitchEnabled(colorModelSwitchEnabled.isChecked)
+                // Set is user be able to switch color model
+                .setColorModelSwitchEnabled(colorModelSwitchingToggle.isChecked)
 
                 // Set your localized string resource for OK button
                 .setButtonOkText(R.string.action_ok)
@@ -89,7 +71,23 @@ class MainActivity : AppCompatActivity() {
             colorPicker.show(supportFragmentManager, "color_picker")
         }
 
+        // Restore color and listeners after activity recreate
+        if (savedInstanceState != null) {
+            currentColor = savedInstanceState.getInt(colorKey)
 
+            val colorPicker = supportFragmentManager.findFragmentByTag("color_picker") as ColorPickerDialog?
+            colorPicker?.setOnSelectColorListener { color ->
+                // Save color to variable
+                currentColor = color
+
+                // Set background color to view result
+                colorView.setBackgroundColor(color)
+            }
+
+            colorPicker?.setOnSwitchColorModelListener { colorModel ->
+                Toast.makeText(this, "Switched to ${colorModel.name}", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     // Save current color to bundle before activity will be destroyed

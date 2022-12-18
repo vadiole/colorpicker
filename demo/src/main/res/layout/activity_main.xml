@@ -41,7 +41,7 @@
             android:id="@+id/color_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/darker_gray" />
+            android:background="@android:color/holo_red_light" />
     </FrameLayout>
 
     <View
@@ -57,7 +57,7 @@
         android:paddingHorizontal="24dp"
         android:layout_height="wrap_content"
         android:paddingVertical="12dp"
-        android:textColor="@android:color/black"
+        android:textColor="@color/text"
         android:text="@string/switch_color_model"
         android:typeface="monospace"
         app:layout_constraintBottom_toTopOf="@+id/alpha_channel_toggle"
@@ -71,13 +71,12 @@
         android:layout_marginBottom="8dp"
         android:paddingHorizontal="24dp"
         android:paddingVertical="12dp"
-        android:textColor="@android:color/black"
+        android:textColor="@color/text"
         android:text="@string/use_alpha"
         android:typeface="monospace"
         app:layout_constraintBottom_toTopOf="@+id/pick_color_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
 
     <Button
         android:id="@+id/pick_color_button"

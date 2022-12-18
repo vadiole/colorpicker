@@ -2,7 +2,14 @@ package vadiole.colorpicker
 
 
 import android.graphics.Color
-import vadiole.colorpicker.ColorModel.GradientBackground.*
+import vadiole.colorpicker.ColorModel.GradientBackground.ALPHA
+import vadiole.colorpicker.ColorModel.GradientBackground.BLUE
+import vadiole.colorpicker.ColorModel.GradientBackground.GREEN
+import vadiole.colorpicker.ColorModel.GradientBackground.HUE
+import vadiole.colorpicker.ColorModel.GradientBackground.NONE
+import vadiole.colorpicker.ColorModel.GradientBackground.RED
+import vadiole.colorpicker.ColorModel.GradientBackground.SATURATION
+import vadiole.colorpicker.ColorModel.GradientBackground.VALUE
 
 enum class ColorModel {
 
@@ -24,6 +31,24 @@ enum class ColorModel {
 
         override fun evaluateColor(channels: List<Channel>): Int = Color.rgb(
             channels[0].progress, channels[1].progress, channels[2].progress
+        )
+    },
+
+    AHSV {
+        override val channels: List<Channel> = listOf(
+            Channel("A", 0, 255, Color::alpha, ALPHA),
+            Channel("H", 0, 360, ::hue, HUE),
+            Channel("S", 0, 100, ::saturation, SATURATION),
+            Channel("V", 0, 100, ::value, VALUE)
+        )
+
+        override fun evaluateColor(channels: List<Channel>): Int = Color.HSVToColor(
+            channels[0].progress,
+            floatArrayOf(
+                (channels[1].progress).toFloat(),
+                (channels[2].progress / 100.0).toFloat(),
+                (channels[3].progress / 100.0).toFloat()
+            )
         )
     },
 
