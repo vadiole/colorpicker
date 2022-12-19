@@ -13,18 +13,16 @@ import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.view.doOnLayout
-import vadiole.colorpicker.ColorModel.*
 
 class ColorPickerView : RelativeLayout {
 
     companion object {
-        const val defaultColor = Color.DKGRAY
-        val defaultColorModel = HSV
+        const val defaultColor = Color.RED
+        val defaultColorModel = ColorModel.HSV
         const val defaultColorModelSwitch = true
         const val defaultActionOk = android.R.string.ok
         const val defaultActionCancel = android.R.string.cancel
     }
-
 
     @ColorInt
     var currentColor: Int
@@ -98,7 +96,7 @@ class ColorPickerView : RelativeLayout {
             colorView.background = ColorDrawable(currentColor)
 
             when (colorModel) {
-                HSV -> {
+                ColorModel.HSV -> {
                     channelViews.forEach {
                         it.setTintHSV(
                             channelViews[0].channel.progress,
@@ -107,7 +105,7 @@ class ColorPickerView : RelativeLayout {
                         )
                     }
                 }
-                RGB -> {
+                ColorModel.RGB -> {
                     channelViews.forEach {
                         it.setTintRGB(
                             channelViews[0].channel.progress,
@@ -116,7 +114,16 @@ class ColorPickerView : RelativeLayout {
                         )
                     }
                 }
-                ARGB -> {
+                ColorModel.AHSV -> {
+                    channelViews.forEach {
+                        it.setTintHSV(
+                            channelViews[1].channel.progress,
+                            channelViews[2].channel.progress,
+                            channelViews[3].channel.progress
+                        )
+                    }
+                }
+                ColorModel.ARGB -> {
                     channelViews.forEach {
                         it.setTintRGB(
                             channelViews[1].channel.progress,
@@ -139,31 +146,40 @@ class ColorPickerView : RelativeLayout {
             it.registerListener(seekbarChangeListener)
         }
 
-        if (colorModelSwitchEnabled && colorModel != ARGB) {
+        if (colorModelSwitchEnabled) {
             doOnLayout {
                 val root = findViewById<RelativeLayout>(R.id.color_picker_view)
                 val view = View(context).apply {
-                    background = ContextCompat.getDrawable(
-                        context,
-                        R.drawable.selectable_item_background_rounded
-                    )
+                    background = ContextCompat.getDrawable(context, R.drawable.selectable_item_background_rounded)
                     isFocusable = true
                     isClickable = true
                     onClick {
-                        colorModel = if (colorModel == HSV) RGB else HSV
+                        colorModel = when (colorModel) {
+                            ColorModel.HSV -> {
+                                ColorModel.RGB
+                            }
+                            ColorModel.RGB -> {
+                                ColorModel.HSV
+                            }
+                            ColorModel.ARGB -> {
+                                ColorModel.AHSV
+                            }
+                            ColorModel.AHSV -> {
+                                ColorModel.ARGB
+                            }
+                        }
 
                         channelViews.forEach { it.removeSelf() }
-                        channelViews =
-                            colorModel.channels.map {
-                                ChannelView(
-                                    context,
-                                    it,
-                                    currentColor,
-                                    textColor,
-                                    thumbColor,
-                                    rippleColor,
-                                )
-                            }
+                        channelViews = colorModel.channels.map {
+                            ChannelView(
+                                context,
+                                it,
+                                currentColor,
+                                textColor,
+                                thumbColor,
+                                rippleColor,
+                            )
+                        }
                         channelViews.forEach {
                             val lp = LinearLayout.LayoutParams(
                                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -179,7 +195,7 @@ class ColorPickerView : RelativeLayout {
                 }
 
                 with(channelViews[0].findViewById<View>(R.id.label)) {
-                    val params = LayoutParams(width, height * 3).apply {
+                    val params = LayoutParams(width, height * channelViews.size).apply {
                         leftMargin = left
                         topMargin = top
                         addRule(ALIGN_TOP, R.id.channel_container)
@@ -196,20 +212,18 @@ class ColorPickerView : RelativeLayout {
         fun onNegativeButtonClick()
     }
 
-    internal fun enableButtonBar(listener: ButtonBarListener?) {
+    internal fun enableButtonBar(listener: ButtonBarListener) {
         with(findViewById<LinearLayout>(R.id.button_bar)) {
-            val positiveButton = findViewById<Button>(R.id.positive_button)
-            val negativeButton = findViewById<Button>(R.id.negative_button)
-
-            if (listener != null) {
-                visibility = VISIBLE
-                positiveButton.setOnClickListener { listener.onPositiveButtonClick(currentColor) }
-                negativeButton.setOnClickListener { listener.onNegativeButtonClick() }
-            } else {
-                visibility = GONE
-                positiveButton.setOnClickListener(null)
-                negativeButton.setOnClickListener(null)
+            val positiveButton = findViewById<Button>(R.id.positive_button).apply {
+                setText(actionOkRes)
             }
+            val negativeButton = findViewById<Button>(R.id.negative_button).apply {
+                setText(actionCancelRes)
+            }
+
+            visibility = VISIBLE
+            positiveButton.setOnClickListener { listener.onPositiveButtonClick(currentColor) }
+            negativeButton.setOnClickListener { listener.onNegativeButtonClick() }
         }
     }
 }
