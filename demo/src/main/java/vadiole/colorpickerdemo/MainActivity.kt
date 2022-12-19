@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
                 // Set initial (default) color
                 .setInitialColor(currentColor)
 
-                // Set Color Model. If use alpha - ARGB, else RGB. Use what your want
+                // Set Color Model, can be ARGB, RGB, AHSV or HSV
                 .setColorModel(if (alphaChannelToggle.isChecked) ColorModel.ARGB else ColorModel.RGB)
 
                 // Set is user be able to switch color model
