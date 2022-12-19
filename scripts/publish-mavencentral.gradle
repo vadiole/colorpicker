@@ -26,15 +26,14 @@ ext["signing.password"] = ''
 ext["signing.secretKeyRingFile"] = ''
 ext["ossrhUsername"] = ''
 ext["ossrhPassword"] = ''
-ext["sonatypeStagingProfileId"] = ''
-//File secretPropsFile = project.rootProject.file('secret.properties')
-//Properties p = new Properties()
-//new FileInputStream(secretPropsFile).withCloseable { is ->
-//    p.load(is)
-//}
-//p.each { name, value ->
-//    ext[name] = value
-//}
+File secretPropsFile = project.rootProject.file('secret.properties')
+Properties p = new Properties()
+new FileInputStream(secretPropsFile).withCloseable { is ->
+    p.load(is)
+}
+p.each { name, value ->
+    ext[name] = value
+}
 
 afterEvaluate {
     publishing {

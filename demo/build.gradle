@@ -6,7 +6,6 @@ plugins {
 
 android {
     compileSdkVersion 33
-    buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "vadiole.colorpickerdemo"
@@ -19,10 +18,11 @@ android {
     buildTypes {
         debug {
             minifyEnabled false
+            shrinkResources false
         }
         release {
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt')
         }
     }
     compileOptions {
@@ -37,7 +37,6 @@ android {
 dependencies {
     implementation project(':colorpicker')
 
-    implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 }

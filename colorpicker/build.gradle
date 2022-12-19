@@ -1,7 +1,6 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
-    id 'maven-publish'
 }
 
 android {
@@ -10,13 +9,11 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 33
-
-        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -40,29 +37,14 @@ android {
     }
 }
 
-afterEvaluate {
-    publishing {
-        publications {
-            release(MavenPublication) {
-                from components.release
-                groupId "io.github.vadiole"
-                artifactId "colorpicker"
-                version = "$verName"
-            }
-        }
-        repositories {
-            maven {
-                credentials {
-                    username "usename"
-                    password "password"
-                }
-                url = uri("url")
-            }
-        }
-    }
-}
-
 dependencies {
-    implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.appcompat:appcompat:1.5.1'
 }
+
+ext {
+    PUBLISH_GROUP_ID = 'io.github.vadiole'
+    PUBLISH_VERSION = '1.0.2'
+    PUBLISH_ARTIFACT_ID = 'colorpicker'
+}
+
+apply from: "${rootProject.projectDir}/scripts/publish-mavencentral.gradle"

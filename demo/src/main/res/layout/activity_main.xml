@@ -32,10 +32,10 @@
         android:background="@drawable/alpha_texture"
         app:layout_constraintBottom_toTopOf="@+id/color_model_switching_toggle"
         app:layout_constraintDimensionRatio="1"
+        android:layout_margin="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/color_picker_demo"
-        app:layout_constraintHeight_percent="0.3">
+        app:layout_constraintTop_toBottomOf="@+id/color_picker_demo">
 
         <View
             android:id="@+id/color_view"
@@ -92,6 +92,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
