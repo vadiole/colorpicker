@@ -1,58 +1,63 @@
 # Color Picker — beautiful library for Android
 
-[![maven central](https://img.shields.io/maven-central/v/io.github.vadiole/colorpicker?color=236dc22&labelColor=424242)](https://search.maven.org/artifact/io.github.vadiole/colorpicker/1.0.2/aar) [![github](https://shields.io/badge/github-black?logo=github&labelColor=24282e&color=24282e&logoColor=white)](https://github.com/vadiole/colorpicker)
+[![maven central](https://img.shields.io/maven-central/v/io.github.vadiole/colorpicker?color=236dc22&labelColor=424242)](https://search.maven.org/artifact/io.github.vadiole/colorpicker/1.0.3/aar) [![github](https://shields.io/badge/github-black?logo=github&labelColor=24282e&color=24282e&logoColor=white)](https://github.com/vadiole/colorpicker)
 
 <img src="https://raw.githubusercontent.com/vadiole/colorpicker/master/assets/1_l.png" alt="screenshot 1" width="25%" height="25%"><img src="https://raw.githubusercontent.com/vadiole/colorpicker/master/assets/2_l.png" alt="screenshot 2" width="25%" height="25%"><img src="https://raw.githubusercontent.com/vadiole/colorpicker/master/assets/1_d.png" alt="screenshot 3" width="25%" height="25%"><img src="https://raw.githubusercontent.com/vadiole/colorpicker/master/assets/2_d.png" alt="screenshot 4" width="25%" height="25%"><img src="https://raw.githubusercontent.com/vadiole/colorpicker/master/assets/3_l.png" alt="screenshot 5" width="25%" height="25%"><img src="https://raw.githubusercontent.com/vadiole/colorpicker/master/assets/4_l.png" alt="screenshot 6" width="25%" height="25%"><img src="https://raw.githubusercontent.com/vadiole/colorpicker/master/assets/3_d.png" alt="screenshot 7" width="25%" height="25%"><img src="https://raw.githubusercontent.com/vadiole/colorpicker/master/assets/4_d.png" alt="screenshot 8" width="25%" height="25%">
 
 ### Features
-  - Simple dialog builder 
-  - ARGB, RGB & HSV color models
-  - Dark theme support
-  - Sliders with gradient background
-  - Switch color models in runtime
 
+- Simple dialog builder
+- RGB & HSV color models, with optional alpha channel
+- Dark theme support
+- Sliders with gradient background
+- Switch color models in runtime
 
-### Setup
+### Download
+
+Kotlin DSL:
+```kotlin
+implementation("io.github.vadiole:colorpicker:1.0.3")
+```
+
+Groove:
 ```gradle
-dependencies {
-    implementation 'io.github.vadiole:colorpicker:1.0.2'
-}
+implementation 'io.github.vadiole:colorpicker:1.0.3'
 ```
 
 ### Usage
+
 ```kotlin
 
-//  create dialog
+// Create dialog
 val colorPicker: ColorPickerDialog = ColorPickerDialog.Builder()
 
-                //  set initial (default) color
-                .setInitialColor(currentColor)
+    // Set initial (default) color
+    .setInitialColor(currentColor)
 
-                //  set Color Model. ARGB, RGB or HSV
-                .setColorModel(ColorModel.HSV)
+    // Set Color Model, can be ARGB, RGB, AHSV or HSV
+    .setColorModel(ColorModel.HSV)
 
-                //  set is user be able to switch color model
-                .setColorModelSwitchEnabled(true)
+    // Set is user be able to switch color model
+    .setColorModelSwitchEnabled(true)
 
-                //  set your localized string resource for OK button
-                .setButtonOkText(android.R.string.ok)
+    // Set your localized string resource for OK button
+    .setButtonOkText(android.R.string.ok)
 
-                //  set your localized string resource for Cancel button
-                .setButtonCancelText(android.R.string.cancel)
+    // Set your localized string resource for Cancel button
+    .setButtonCancelText(android.R.string.cancel)
 
-                //  callback for picked color (required)
-                .onColorSelected { color: Int ->
-                    //  use color
-                }
+    // Callback for picked color (required)
+    .onColorSelected { color: Int ->
+        // Use color
+    }
 
-                //  create dialog
-                .create()
-                
-                
-//  show dialog from Activity
-colorPicker.show(supportFragmentManager, "color_picker") 
+    // Create dialog
+    .create()
 
-//  show dialog from Fragment
+// Show dialog from Activity
+colorPicker.show(supportFragmentManager, "color_picker")
+
+// Show dialog from Fragment
 colorPicker.show(childFragmentManager, "color_picker")      
 ```
 
