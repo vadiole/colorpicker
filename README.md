@@ -1,4 +1,4 @@
-[![maven central](https://img.shields.io/maven-central/v/io.github.vadiole/colorpicker?color=236dc22&labelColor=424242)](https://search.maven.org/artifact/io.github.vadiole/colorpicker/1.0.3/aar)
+[![maven central](https://img.shields.io/maven-central/v/io.github.vadiole/colorpicker?color=236dc22&labelColor=424242)](https://search.maven.org/artifact/io.github.vadiole/colorpicker/1.0.4/aar)
 
 # Color Picker — beautiful library for Android
 
