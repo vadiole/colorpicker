@@ -1,7 +1,17 @@
 apply plugin: 'maven-publish'
 apply plugin: 'signing'
 
-task androidSourcesJar(type: Jar) {
+// README
+// 1. Build .aar with `./gradlew colorpicker:bundleReleaseAar`
+// 2. Upload .aar to stage mavencentral with `colorpicker:colorpicker [publish]`
+// 3. Create stage version at https://s01.oss.sonatype.org/#stagingRepositories
+// 4. Test stage version:
+//     - add repo: maven { url "https://s01.oss.sonatype.org/content/repositories/staging/" }
+//     - add new dependency to demo app
+//     - run demo app
+// 5. Release stage version at https://s01.oss.sonatype.org/#stagingRepositories
+
+tasks.register('androidSourcesJar', Jar) {
     archiveClassifier.set('sources')
     if (project.plugins.findPlugin("com.android.library")) {
         // For Android libraries
